@@ -27,8 +27,7 @@ Asimismo, la aplicación debe ofrecer un rendimiento ágil, con tiempos de carga
 
 ## *5. Base de Datos*
 ### *5.1. Diagrama Entidad Relación*
-
-<img width="1920" height="1080" alt="Usuarios" src="https://github.com/user-attachments/assets/1ac58734-5f9a-4391-bbf7-fb40c67921c6" />
+<img width="1920" height="1080" alt="Usuarios (1)" src="https://github.com/user-attachments/assets/69fc1f12-bc56-417a-b7fa-cfe64347c608" />
 
 ### *5.2. Digrama Relacional*
-<img width="1190" height="714" alt="DiagRel" src="https://github.com/user-attachments/assets/4b41f5fc-b792-475a-b07d-922b7303111a" />
+<img width="843" height="611" alt="ModeloRelacional" src="https://github.com/user-attachments/assets/6bada5de-ad29-4ed4-928f-e1bdbdb35128" />

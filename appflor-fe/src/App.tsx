@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Home from "./Home";
+import Navbar from "./Navbar";
 import Login from "./components/LoginUsuario";
 import BandejaUsuarios from "./components/BandejaUsuarios";
 
@@ -9,6 +10,11 @@ export default function App() {
 
   return (
     <>
+      <Navbar
+        onHome={() => setPantalla("home")}
+        onLogin={() => setPantalla("login")}
+      />
+
       {pantalla === "home" && <Home onContinuar={() => setPantalla("login")} />}
 
       {pantalla === "login" && !logeado && (

@@ -8,6 +8,7 @@ interface NavbarProps {
     vista:
       | "home"
       | "inicioCliente"
+      | "inicioAdmin"
       | "usuarios"
       | "flores"
       | "arreglos"
@@ -33,12 +34,8 @@ export default function Navbar({
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY || window.pageYOffset;
-      setScrolled(y > 40);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -70,19 +67,20 @@ export default function Navbar({
 
         {usuario ? (
           <>
-            <button onClick={() => setVista("favoritos")}>❤️ Favoritos</button>
-
             {usuario.rol === "admin" && (
               <>
                 <button onClick={() => setVista("usuarios")}>Usuarios</button>
                 <button onClick={() => setVista("flores")}>Flores</button>
                 <button onClick={() => setVista("arreglos")}>Arreglos</button>
+                <button onClick={() => setVista("pedidos")}>Pedidos</button>
+                <button onClick={() => setVista("favoritos")}>Favoritos</button>
               </>
             )}
 
             {usuario.rol === "cliente" && (
               <>
                 <button onClick={() => setVista("ramos")}>Ramos</button>
+                <button onClick={() => setVista("favoritos")}>❤️ Favoritos</button>
                 <button onClick={() => setVista("pedidos")}>Pedidos</button>
               </>
             )}

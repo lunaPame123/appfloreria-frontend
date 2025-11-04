@@ -3,8 +3,10 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Login from "./Login";
 
-// Vistas de cliente
+// Vistas de cliente y admin
 import InicioCliente from "./InicioCliente";
+import InicioAdmin from "./InicioAdmin";
+
 
 // Componentes de entidades
 import BandejaUsuarios from "./components/Usuarios/UI/BandejaUsuarios";
@@ -22,6 +24,7 @@ export default function App() {
   const [vista, setVista] = useState<
     | "home"
     | "inicioCliente"
+    | "inicioAdmin"
     | "usuarios"
     | "flores"
     | "arreglos"
@@ -33,11 +36,13 @@ export default function App() {
 
   const manejarLogin = (user: any) => {
     setUsuario(user);
-    // Si es cliente, lo mandamos directo a la vista tipo Pinterest
+
     if (user.rol === "cliente") {
       setVista("inicioCliente");
+    } else if (user.rol === "admin"){
+      setVista("inicioAdmin");
     } else {
-      setVista("home");
+      setVista ("home")
     }
     setLoginVisible(false);
   };
@@ -52,6 +57,8 @@ export default function App() {
   const manejarInicioClick = () => {
     if (usuario?.rol === "cliente") {
       setVista("inicioCliente");
+    } else if (usuario?.rol === "admin"){
+      setVista ("inicioAdmin");
     } else {
       setVista("home");
     }
@@ -66,12 +73,12 @@ export default function App() {
         darkMode={modoOscuro}
         toggleDarkMode={toggleModo}
         onLoginClick={() => setLoginVisible(true)}
-        onInicioClick={manejarInicioClick} // 👈 añadimos esta función
+        onInicioClick={manejarInicioClick}
       />
 
       <div
         className={
-          vista === "home" || vista === "inicioCliente"
+          vista === "home" || vista === "inicioCliente" || vista === "inicioAdmin"
             ? "vista-home"
             : "vista-bandeja"
         }
@@ -79,6 +86,13 @@ export default function App() {
         {vista === "home" && <Home user={usuario} />}
         {vista === "inicioCliente" && (
           <InicioCliente idUsuario={usuario?.id_usuario} />
+        )}
+
+        {vista === "inicioAdmin" && (
+          <InicioAdmin
+            onSeleccionar={(opcion) => setVista (opcion as any)}
+            modoOscuro = {modoOscuro}
+          />
         )}
 
         {/* Vistas para admin */}
@@ -91,6 +105,15 @@ export default function App() {
         {usuario?.rol === "admin" && vista === "arreglos" && (
           <BandejaArreglos rolUsuario="admin" />
         )}
+        {usuario?.rol === "admin" && vista === "pedidos" && (
+          <BandejaPedidos idUsuario={usuario.id_usuario} />
+        )}
+        {usuario?.rol === "admin" && vista === "favoritos" && (
+          <BandejaFavoritos
+            rolUsuario={usuario.rol}
+            idUsuario={usuario.id_usuario}
+          />
+        )}
 
         {/* Vistas para cliente */}
         {usuario?.rol === "cliente" && vista === "ramos" && (
@@ -99,9 +122,7 @@ export default function App() {
         {usuario?.rol === "cliente" && vista === "pedidos" && (
           <BandejaPedidos idUsuario={usuario.id_usuario} />
         )}
-
-        {/* Vista de favoritos (común a ambos) */}
-        {usuario && vista === "favoritos" && (
+        {usuario?.rol === "cliente" && vista === "favoritos" && (
           <BandejaFavoritos
             rolUsuario={usuario.rol}
             idUsuario={usuario.id_usuario}

@@ -1,0 +1,58 @@
+.inicio-admin {
+  padding: 40px;
+  text-align: center;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.inicio-admin.oscuro {
+  background-color: #1e1e1e;
+  color: #f4f4f4;
+}
+
+.titulo-admin {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #b54e73;
+}
+
+.contenedor-opciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+.tarjeta-opcion {
+  background-color: #fff;
+  border: 2px solid #b54e73;
+  border-radius: 10px;
+  padding: 20px;
+  width: 200px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #b54e73;
+  transition: transform 0.2s, background-color 0.3s, color 0.3s;
+}
+
+.tarjeta-opcion:hover {
+  transform: scale(1.05);
+  background-color: #b54e73;
+  color: white;
+}
+
+.inicio-admin.oscuro .tarjeta-opcion {
+  background-color: #333;
+  border: 2px solid #d182a6;
+  color: #eaeaea;
+}
+
+.inicio-admin.oscuro .tarjeta-opcion:hover {
+  background-color: #d182a6;
+  color: #1e1e1e;
+}

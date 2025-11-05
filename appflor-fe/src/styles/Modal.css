@@ -1,75 +1,94 @@
-/* Overlay general del modal */
+/* === OVERLAY GENERAL === */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.5); /* fondo semitransparente */
+  background-color: rgba(0, 0, 0, 0.55);
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(4px);
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  animation: fadeIn 0.3s ease;
+  transition: background-color 0.4s ease;
 }
 
-/* Contenedor del modal */
+/* === ANIMACIÓN DE ENTRADA === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* === CONTENEDOR DEL MODAL === */
 .modal-container {
-  background-color: #fff; /* claro por defecto */
+  background-color: #ffffff;
   color: #333;
-  padding: 25px 20px;
-  border-radius: 16px;
-  width: 350px;
+  padding: 28px 24px;
+  border-radius: 18px;
+  width: 380px;
   max-width: 95%;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
-  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  gap: 12px;
+  transition: all 0.4s ease;
+  transform: translateY(0);
 }
 
 .modal-container:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
 }
 
-/* Modo oscuro */
+/* === MODO OSCURO === */
 .modal-container.oscuro {
   background-color: #2b2b2b;
   color: #f4f4f4;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08);
 }
 
-/* Título del modal */
+/* === TÍTULO DEL MODAL === */
 .modal-title {
-  font-family: 'Arial', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
-  font-size: 1.2rem;
-  margin-bottom: 16px;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
   text-align: center;
-  color: #b54e73; /* color destacado Pinterest */
+  color: #b54e73;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
 }
 
 .modal-container.oscuro .modal-title {
-  color: #e0a6c0; /* más visible en dark mode */
+  color: #f3b5d0;
 }
 
-/* Inputs y selects */
+/* === CAMPOS DE ENTRADA === */
 .modal-input,
 .modal-select {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 12px;
-  border-radius: 8px;
+  width: 95%;
+  padding: 11px 13px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   background-color: #fff;
   color: #333;
   font-size: 0.95rem;
-  font-family: 'Arial', sans-serif;
-  transition: border 0.2s, background 0.2s, color 0.2s;
+  font-family: "Poppins", sans-serif;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .modal-container.oscuro .modal-input,
 .modal-container.oscuro .modal-select {
   border: 1px solid #555;
-  background-color: #444;
+  background-color: #3a3a3a;
   color: #f4f4f4;
 }
 
@@ -80,63 +99,89 @@
 
 .modal-container.oscuro .modal-input::placeholder,
 .modal-container.oscuro .modal-select::placeholder {
-  color: #ccc;
+  color: #bbb;
 }
 
+/* === ENFOQUE === */
 .modal-input:focus,
 .modal-select:focus {
   border-color: #b54e73;
+  background-color: #f8e5df;
   outline: none;
-  background-color: #f8e5df; /* claro al enfocar */
+  box-shadow: 0 0 0 2px rgba(181, 78, 115, 0.2);
 }
 
 .modal-container.oscuro .modal-input:focus,
 .modal-container.oscuro .modal-select:focus {
-  background-color: #555; /* oscuro al enfocar */
+  border-color: #f3b5d0;
+  background-color: #4a4a4a;
+  box-shadow: 0 0 0 2px rgba(243, 181, 208, 0.2);
 }
 
-/* Botones */
+/* === BOTONES === */
 .modal-buttons {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin-top: 12px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
-.modal-button-cancel {
-  padding: 8px 16px;
-  border-radius: 8px;
+.modal-button-cancel,
+.modal-button-save {
+  padding: 9px 18px;
+  border-radius: 10px;
   border: none;
-  background: #ccc;
-  color: #333;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Botón cancelar */
+.modal-button-cancel {
+  background: #ddd;
+  color: #333;
 }
 
 .modal-button-cancel:hover {
-  background-color: #b3b3b3;
+  background-color: #bbb;
 }
 
+.modal-container.oscuro .modal-button-cancel {
+  background-color: #555;
+  color: #f4f4f4;
+}
+
+.modal-container.oscuro .modal-button-cancel:hover {
+  background-color: #777;
+}
+
+/* Botón guardar */
 .modal-button-save {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: none;
   background: #b54e73;
   color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s;
+  box-shadow: 0 3px 6px rgba(181, 78, 115, 0.25);
 }
 
 .modal-button-save:hover {
   background-color: #d182a6;
+  transform: translateY(-2px);
 }
 
-/* Responsividad: estilo tipo Pinterest si quieres mostrar varios modales pequeños */
+.modal-container.oscuro .modal-button-save {
+  background-color: #d182a6;
+  color: #1e1e1e;
+}
+
+.modal-container.oscuro .modal-button-save:hover {
+  background-color: #f3b5d0;
+}
+
+/* === RESPONSIVIDAD === */
 @media (max-width: 768px) {
   .modal-container {
-    width: 90%;
-    padding: 20px;
+    width: 85%;
+    padding: 22px;
+    font-size: 0.9rem;
   }
 }

@@ -5,9 +5,10 @@ import "../../../styles/Bandeja.css";
 
 type Props = {
   idUsuario: number;
+  darkMode: boolean;
 };
 
-export default function BandejaPedidos({ idUsuario }: Props) {
+export default function BandejaPedidos({ idUsuario, darkMode }: Props) {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [pedidoActual, setPedidoActual] = useState<Pedido | null>(null);
@@ -58,7 +59,7 @@ export default function BandejaPedidos({ idUsuario }: Props) {
   };
 
   return (
-    <div className="bandeja-container">
+    <div className={`bandeja-container ${darkMode ? "oscuro" : "claro"}`}>
       <div className="bandeja-header">
         <h2>Bandeja de Pedidos</h2>
         <button onClick={abrirModalCrear}>Crear Pedido</button>
@@ -118,7 +119,7 @@ export default function BandejaPedidos({ idUsuario }: Props) {
         </button>
       </div>
 
-      {modalVisible && <ModalPedido pedidoActual={pedidoActual} onGuardar={guardarPedido} onCerrar={() => setModalVisible(false)} idUsuario={idUsuario} />}
+      {modalVisible && <ModalPedido pedidoActual={pedidoActual} onGuardar={guardarPedido} onCerrar={() => setModalVisible(false)} idUsuario={idUsuario} darkMode={darkMode} />}
     </div>
   );
 }

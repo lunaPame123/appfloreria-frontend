@@ -6,9 +6,10 @@ import "../../../styles/Bandeja.css";
 type Props = {
   onLogout: () => void;
   rolUsuario: "admin" | "cliente";
+  darkMode: boolean;
 };
 
-export default function BandejaUsuarios({ rolUsuario }: Props) {
+export default function BandejaUsuarios({ rolUsuario, darkMode }: Props) {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [usuarioActual, setUsuarioActual] = useState<Usuario | null>(null);
@@ -50,7 +51,6 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
     setModalVisible(false);
   };
 
-  // Paginación
   const totalPaginas = Math.ceil(usuarios.length / usuariosPorPagina);
   const indiceInicial = (paginaActual - 1) * usuariosPorPagina;
   const indiceFinal = indiceInicial + usuariosPorPagina;
@@ -60,7 +60,7 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
   };
 
   return (
-    <div className="bandeja-container">
+    <div className={`bandeja-container ${darkMode ? "oscuro" : "claro"}`}>
       <div className="bandeja-header">
         <h2>Bandeja de Usuarios</h2>
         {rolUsuario === "admin" && (
@@ -70,7 +70,6 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
         )}
       </div>
 
-      {/* Tabla para escritorio */}
       <div className="table-container">
         <table className="bandeja-table">
           <thead>
@@ -98,7 +97,6 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
         </table>
       </div>
 
-      {/* Tarjetas para móvil */}
       <div className="cards-container">
         {usuariosVisibles.map((u) => (
           <div className="card-item" key={u.id_usuario}>
@@ -109,7 +107,6 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
         ))}
       </div>
 
-      {/* Paginación */}
       <div className="paginacion">
         <button onClick={() => cambiarPagina(paginaActual - 1)} disabled={paginaActual === 1}>
           ⬅ Anterior
@@ -123,7 +120,7 @@ export default function BandejaUsuarios({ rolUsuario }: Props) {
       </div>
 
       {modalVisible && (
-        <ModalUsuarios usuarioActual={usuarioActual} onGuardar={guardarUsuario} onCerrar={() => setModalVisible(false)} />
+        <ModalUsuarios usuarioActual={usuarioActual} onGuardar={guardarUsuario} onCerrar={() => setModalVisible(false)} darkMode={darkMode}/>
       )}
     </div>
   );

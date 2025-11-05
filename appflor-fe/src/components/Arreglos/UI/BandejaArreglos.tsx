@@ -5,9 +5,10 @@ import "../../../styles/Bandeja.css";
 
 type Props = {
   rolUsuario: "admin" | "cliente";
+  darkMode: boolean;
 };
 
-export default function BandejaArreglos({ rolUsuario }: Props) {
+export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
   const [arreglos, setArreglos] = useState<Arreglo[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [arregloActual, setArregloActual] = useState<Arreglo | null>(null);
@@ -55,7 +56,7 @@ export default function BandejaArreglos({ rolUsuario }: Props) {
   };
 
   return (
-    <div className="bandeja-container">
+    <div className={`bandeja-container ${darkMode ? "oscuro" : "claro"}`}>
       <div className="bandeja-header">
         <h2>Bandeja de Arreglos</h2>
         {rolUsuario === "admin" && (
@@ -123,7 +124,7 @@ export default function BandejaArreglos({ rolUsuario }: Props) {
         </button>
       </div>
 
-      {modalVisible && <ModalArreglo arregloActual={arregloActual} onGuardar={guardarArreglo} onCerrar={() => setModalVisible(false)} />}
+      {modalVisible && <ModalArreglo arregloActual={arregloActual} onGuardar={guardarArreglo} onCerrar={() => setModalVisible(false)} darkMode={darkMode} />}
     </div>
   );
 }

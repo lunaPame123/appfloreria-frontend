@@ -5,9 +5,10 @@ import "../../../styles/Bandeja.css";
 
 type Props = {
   rolUsuario: "admin" | "cliente";
+  darkMode: boolean;
 };
 
-export default function BandejaFlores({ rolUsuario }: Props) {
+export default function BandejaFlores({ rolUsuario, darkMode }: Props) {
   const [flores, setFlores] = useState<Flor[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [florActual, setFlorActual] = useState<Flor | null>(null);
@@ -56,7 +57,7 @@ export default function BandejaFlores({ rolUsuario }: Props) {
   };
 
   return (
-    <div className="bandeja-container">
+    <div className={`bandeja-container ${darkMode ? "oscuro" : "claro"}`}>
       <div className="bandeja-header">
         <h2>Bandeja de Flores</h2>
         {rolUsuario === "admin" && (
@@ -124,7 +125,7 @@ export default function BandejaFlores({ rolUsuario }: Props) {
         </button>
       </div>
 
-      {modalVisible && <ModalFlor florActual={florActual} onGuardar={guardarFlor} onCerrar={() => setModalVisible(false)} />}
+      {modalVisible && <ModalFlor florActual={florActual} onGuardar={guardarFlor} onCerrar={() => setModalVisible(false)} darkMode={darkMode}/>}
     </div>
   );
 }

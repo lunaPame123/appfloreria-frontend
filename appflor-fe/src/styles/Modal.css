@@ -1,0 +1,142 @@
+/* Overlay general del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5); /* fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* Contenedor del modal */
+.modal-container {
+  background-color: #fff; /* claro por defecto */
+  color: #333;
+  padding: 25px 20px;
+  border-radius: 16px;
+  width: 350px;
+  max-width: 95%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.modal-container:hover {
+  transform: translateY(-4px);
+}
+
+/* Modo oscuro */
+.modal-container.oscuro {
+  background-color: #2b2b2b;
+  color: #f4f4f4;
+}
+
+/* Título del modal */
+.modal-title {
+  font-family: 'Arial', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #b54e73; /* color destacado Pinterest */
+}
+
+.modal-container.oscuro .modal-title {
+  color: #e0a6c0; /* más visible en dark mode */
+}
+
+/* Inputs y selects */
+.modal-input,
+.modal-select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  font-size: 0.95rem;
+  font-family: 'Arial', sans-serif;
+  transition: border 0.2s, background 0.2s, color 0.2s;
+}
+
+.modal-container.oscuro .modal-input,
+.modal-container.oscuro .modal-select {
+  border: 1px solid #555;
+  background-color: #444;
+  color: #f4f4f4;
+}
+
+.modal-input::placeholder,
+.modal-select::placeholder {
+  color: #aaa;
+}
+
+.modal-container.oscuro .modal-input::placeholder,
+.modal-container.oscuro .modal-select::placeholder {
+  color: #ccc;
+}
+
+.modal-input:focus,
+.modal-select:focus {
+  border-color: #b54e73;
+  outline: none;
+  background-color: #f8e5df; /* claro al enfocar */
+}
+
+.modal-container.oscuro .modal-input:focus,
+.modal-container.oscuro .modal-select:focus {
+  background-color: #555; /* oscuro al enfocar */
+}
+
+/* Botones */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.modal-button-cancel {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #ccc;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-button-cancel:hover {
+  background-color: #b3b3b3;
+}
+
+.modal-button-save {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #b54e73;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.modal-button-save:hover {
+  background-color: #d182a6;
+}
+
+/* Responsividad: estilo tipo Pinterest si quieres mostrar varios modales pequeños */
+@media (max-width: 768px) {
+  .modal-container {
+    width: 90%;
+    padding: 20px;
+  }
+}

@@ -7,16 +7,15 @@ import Login from "./Login";
 import InicioCliente from "./InicioCliente";
 import InicioAdmin from "./InicioAdmin";
 
-
 // Componentes de entidades
 import BandejaUsuarios from "./components/Usuarios/UI/BandejaUsuarios";
 import BandejaFlores from "./components/Flores/UI/BandejaFlores";
 import BandejaArreglos from "./components/Arreglos/UI/BandejaArreglos";
 import BandejaPedidos from "./components/Pedidos/UI/BandejaPedidos";
 import BandejaFavoritos from "./components/Favoritos/UI/BandejaFavoritos";
+import RamosCliente from "./components/Ramos/UI/RamosCliente";
 
 import "./App.css";
-import RamosCliente from "./components/Ramos/UI/RamosCliente";
 
 export default function App() {
   const [usuario, setUsuario] = useState<any>(null);
@@ -39,11 +38,12 @@ export default function App() {
 
     if (user.rol === "cliente") {
       setVista("inicioCliente");
-    } else if (user.rol === "admin"){
+    } else if (user.rol === "admin") {
       setVista("inicioAdmin");
     } else {
-      setVista ("home")
+      setVista("home");
     }
+
     setLoginVisible(false);
   };
 
@@ -57,8 +57,8 @@ export default function App() {
   const manejarInicioClick = () => {
     if (usuario?.rol === "cliente") {
       setVista("inicioCliente");
-    } else if (usuario?.rol === "admin"){
-      setVista ("inicioAdmin");
+    } else if (usuario?.rol === "admin") {
+      setVista("inicioAdmin");
     } else {
       setVista("home");
     }
@@ -84,14 +84,15 @@ export default function App() {
         }
       >
         {vista === "home" && <Home user={usuario} />}
+
         {vista === "inicioCliente" && (
           <InicioCliente idUsuario={usuario?.id_usuario} />
         )}
 
         {vista === "inicioAdmin" && (
           <InicioAdmin
-            onSeleccionar={(opcion) => setVista (opcion as any)}
-            modoOscuro = {modoOscuro}
+            onSeleccionar={(opcion) => setVista(opcion as any)}
+            modoOscuro={modoOscuro}
           />
         )}
 

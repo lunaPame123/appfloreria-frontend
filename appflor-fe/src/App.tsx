@@ -3,11 +3,9 @@ import Navbar from "./Navbar";
 import Home from "./Home";
 import Login from "./Login";
 
-// Vistas de cliente y admin
 import InicioCliente from "./InicioCliente";
 import InicioAdmin from "./InicioAdmin";
 
-// Componentes de entidades
 import BandejaUsuarios from "./components/Usuarios/UI/BandejaUsuarios";
 import BandejaFlores from "./components/Flores/UI/BandejaFlores";
 import BandejaArreglos from "./components/Arreglos/UI/BandejaArreglos";
@@ -19,7 +17,7 @@ import "./App.css";
 
 export default function App() {
   const [usuario, setUsuario] = useState<any>(null);
-  const [modoOscuro, setModoOscuro] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const [vista, setVista] = useState<
     | "home"
     | "inicioCliente"
@@ -52,7 +50,7 @@ export default function App() {
     setVista("home");
   };
 
-  const toggleModo = () => setModoOscuro(!modoOscuro);
+  const toggleDarkMode = () => setDarkMode(!darkMode);
 
   const manejarInicioClick = () => {
     if (usuario?.rol === "cliente") {
@@ -65,13 +63,13 @@ export default function App() {
   };
 
   return (
-    <div className={`app-container ${modoOscuro ? "oscuro" : ""}`}>
+    <div className={darkMode ? "app-container oscuro" : "app-container claro"}>
       <Navbar
         usuario={usuario}
         onLogout={manejarLogout}
         setVista={setVista}
-        darkMode={modoOscuro}
-        toggleDarkMode={toggleModo}
+        darkMode={darkMode}
+        toggleDarkMode={toggleDarkMode}
         onLoginClick={() => setLoginVisible(true)}
         onInicioClick={manejarInicioClick}
       />
@@ -86,28 +84,28 @@ export default function App() {
         {vista === "home" && <Home user={usuario} />}
 
         {vista === "inicioCliente" && (
-          <InicioCliente idUsuario={usuario?.id_usuario} />
+          <InicioCliente idUsuario={usuario?.id_usuario} darkMode={darkMode} />
         )}
 
         {vista === "inicioAdmin" && (
           <InicioAdmin
             onSeleccionar={(opcion) => setVista(opcion as any)}
-            modoOscuro={modoOscuro}
+            darkMode={darkMode}
           />
         )}
 
         {/* Vistas para admin */}
         {usuario?.rol === "admin" && vista === "usuarios" && (
-          <BandejaUsuarios onLogout={manejarLogout} rolUsuario="admin" />
+          <BandejaUsuarios onLogout={manejarLogout} rolUsuario="admin" darkMode={darkMode} />
         )}
         {usuario?.rol === "admin" && vista === "flores" && (
-          <BandejaFlores rolUsuario="admin" />
+          <BandejaFlores rolUsuario="admin" darkMode={darkMode}/>
         )}
         {usuario?.rol === "admin" && vista === "arreglos" && (
-          <BandejaArreglos rolUsuario="admin" />
+          <BandejaArreglos rolUsuario="admin" darkMode={darkMode} />
         )}
         {usuario?.rol === "admin" && vista === "pedidos" && (
-          <BandejaPedidos idUsuario={usuario.id_usuario} />
+          <BandejaPedidos idUsuario={usuario.id_usuario} darkMode={darkMode} />
         )}
         {usuario?.rol === "admin" && vista === "favoritos" && (
           <BandejaFavoritos
@@ -121,7 +119,7 @@ export default function App() {
           <RamosCliente idUsuario={usuario.id_usuario} />
         )}
         {usuario?.rol === "cliente" && vista === "pedidos" && (
-          <BandejaPedidos idUsuario={usuario.id_usuario} />
+          <BandejaPedidos idUsuario={usuario.id_usuario} darkMode={darkMode} />
         )}
         {usuario?.rol === "cliente" && vista === "favoritos" && (
           <BandejaFavoritos
@@ -134,7 +132,7 @@ export default function App() {
       {loginVisible && (
         <Login
           onLogin={manejarLogin}
-          modoOscuro={modoOscuro}
+          darkMode={darkMode}
           onCerrar={() => setLoginVisible(false)}
         />
       )}

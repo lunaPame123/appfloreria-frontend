@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Pedido } from "../Types/PedidosTypes";
+import "../../../styles/Modal.css";
 
 type Props = {
   pedidoActual: Pedido | null;
@@ -10,10 +11,16 @@ type Props = {
 
 export default function ModalPedido({ pedidoActual, onGuardar, onCerrar, idUsuario }: Props) {
   const [total, setTotal] = useState(0);
+  const [estado, setEstado] = useState("Pendiente");
 
   useEffect(() => {
-    if (pedidoActual) setTotal(pedidoActual.total);
-    else setTotal(0);
+    if (pedidoActual) {
+      setTotal(pedidoActual.total);
+      setEstado(pedidoActual.estado || "Pendiente");
+    } else {
+      setTotal(0);
+      setEstado("Pendiente");
+    }
   }, [pedidoActual]);
 
   const manejarGuardar = () => {
@@ -25,75 +32,34 @@ export default function ModalPedido({ pedidoActual, onGuardar, onCerrar, idUsuar
     onGuardar({
       ...pedidoActual,
       total,
-      id_usuario: idUsuario, // ahora siempre tiene valor
+      estado,
+      id_usuario: idUsuario,
     });
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "#b3869b",
-          padding: 20,
-          borderRadius: 12,
-          width: 350,
-        }}
-      >
-        <h3 style={{ color: "#3a412f", marginBottom: 12 }}>
-          {pedidoActual ? "Editar Pedido" : "Crear Pedido"}
-        </h3>
+    <div className="modal-overlay">
+      <div className="modal-container">
+        <h3 className="modal-title">{pedidoActual ? "Editar Pedido" : "Crear Pedido"}</h3>
         <input
           type="number"
           placeholder="Total del pedido"
           value={total}
           onChange={(e) => setTotal(Number(e.target.value))}
-          style={{
-            width: "100%",
-            padding: 10,
-            marginBottom: 10,
-            borderRadius: 6,
-            border: "1px solid #3a412f",
-          }}
+          className="modal-input"
         />
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
-          <button
-            onClick={onCerrar}
-            style={{
-              padding: "6px 12px",
-              borderRadius: 6,
-              border: "none",
-              background: "#626b52",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={manejarGuardar}
-            style={{
-              padding: "6px 12px",
-              borderRadius: 6,
-              border: "none",
-              background: "#3a412f",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Guardar
-          </button>
+        <select
+          value={estado}
+          onChange={(e) => setEstado(e.target.value)}
+          className="modal-select"
+        >
+          <option value="Pendiente">Pendiente</option>
+          <option value="Entregado">Entregado</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+        <div className="modal-buttons">
+          <button onClick={onCerrar} className="modal-button-cancel">Cancelar</button>
+          <button onClick={manejarGuardar} className="modal-button-save">Guardar</button>
         </div>
       </div>
     </div>

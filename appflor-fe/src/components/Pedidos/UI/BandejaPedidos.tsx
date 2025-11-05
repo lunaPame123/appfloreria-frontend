@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 import ModalPedido from "./ModalPedido";
 import type { Pedido } from "../Types/PedidosTypes";
+import "../../../styles/Bandeja.css";
 
 type Props = {
-  idUsuario: number; // usuario logueado
+  idUsuario: number;
 };
 
 export default function BandejaPedidos({ idUsuario }: Props) {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [pedidoActual, setPedidoActual] = useState<Pedido | null>(null);
-
-  // Simula obtener datos de una API
-  const obtenerPedidos = async () => {
-    // Por ahora usamos datos dummy
-    const data: Pedido[] = [
-      { id_pedido: 1, total: 150, id_usuario: idUsuario, fecha: "2025-10-27", estado: "Pendiente" },
-      { id_pedido: 2, total: 200, id_usuario: idUsuario, fecha: "2025-10-26", estado: "Entregado" },
-    ];
-    setPedidos(data);
-  };
+  const [paginaActual, setPaginaActual] = useState(1);
+  const pedidosPorPagina = 6;
 
   useEffect(() => {
+    const obtenerPedidos = async () => {
+      const data: Pedido[] = [
+        { id_pedido: 1, total: 150, id_usuario: idUsuario, fecha: "2025-10-27", estado: "Pendiente" },
+        { id_pedido: 2, total: 200, id_usuario: idUsuario, fecha: "2025-10-26", estado: "Entregado" },
+      ];
+      setPedidos(data);
+    };
     obtenerPedidos();
   }, []);
 
@@ -47,73 +47,44 @@ export default function BandejaPedidos({ idUsuario }: Props) {
     setModalVisible(false);
   };
 
+  // Paginación
+  const totalPaginas = Math.ceil(pedidos.length / pedidosPorPagina);
+  const indiceInicial = (paginaActual - 1) * pedidosPorPagina;
+  const indiceFinal = indiceInicial + pedidosPorPagina;
+  const pedidosVisibles = pedidos.slice(indiceInicial, indiceFinal);
+
+  const cambiarPagina = (nuevaPagina: number) => {
+    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) setPaginaActual(nuevaPagina);
+  };
+
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: 20,
-        fontFamily: "Arial, sans-serif",
-        background: "linear-gradient(to bottom, #b1c2a3, #9d8c86)", // paleta Winter Bloom
-      }}
-    >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-        <h2 style={{ color: "#3a412f" }}>Bandeja de Pedidos</h2>
-        <button
-          onClick={abrirModalCrear}
-          style={{
-            padding: "8px 16px",
-            borderRadius: 8,
-            border: "none",
-            background: "#b3869b",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Crear Pedido
-        </button>
+    <div className="bandeja-container">
+      <div className="bandeja-header">
+        <h2>Bandeja de Pedidos</h2>
+        <button onClick={abrirModalCrear}>Crear Pedido</button>
       </div>
 
-      <div style={{ overflowX: "auto" }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            minWidth: 600,
-            background: "white",
-            borderRadius: 8,
-            overflow: "hidden",
-          }}
-        >
+      {/* Tabla para escritorio */}
+      <div className="table-container">
+        <table className="bandeja-table">
           <thead>
-            <tr style={{ background: "#b3869b", color: "white" }}>
-              <th style={{ border: "1px solid #ccc", padding: 8 }}>ID</th>
-              <th style={{ border: "1px solid #ccc", padding: 8 }}>Total</th>
-              <th style={{ border: "1px solid #ccc", padding: 8 }}>Fecha</th>
-              <th style={{ border: "1px solid #ccc", padding: 8 }}>Estado</th>
-              <th style={{ border: "1px solid #ccc", padding: 8 }}>Acciones</th>
+            <tr>
+              <th>ID</th>
+              <th>Total</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {pedidos.map((p) => (
-              <tr key={p.id_pedido} style={{ background: "#e0f2fe", color: "#3a412f" }}>
-                <td style={{ border: "1px solid #ccc", padding: 8 }}>{p.id_pedido}</td>
-                <td style={{ border: "1px solid #ccc", padding: 8 }}>{p.total}</td>
-                <td style={{ border: "1px solid #ccc", padding: 8 }}>{p.fecha}</td>
-                <td style={{ border: "1px solid #ccc", padding: 8 }}>{p.estado}</td>
-                <td style={{ border: "1px solid #ccc", padding: 8 }}>
-                  <button
-                    onClick={() => abrirModalEditar(p)}
-                    style={{
-                      padding: "4px 8px",
-                      borderRadius: 6,
-                      border: "none",
-                      background: "#9d8c86",
-                      color: "white",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Editar
-                  </button>
+            {pedidosVisibles.map(p => (
+              <tr key={p.id_pedido}>
+                <td>{p.id_pedido}</td>
+                <td>{p.total}</td>
+                <td>{p.fecha}</td>
+                <td>{p.estado}</td>
+                <td>
+                  <button onClick={() => abrirModalEditar(p)}>✏️</button>
                 </td>
               </tr>
             ))}
@@ -121,14 +92,33 @@ export default function BandejaPedidos({ idUsuario }: Props) {
         </table>
       </div>
 
-      {modalVisible && (
-        <ModalPedido
-          pedidoActual={pedidoActual}
-          onGuardar={guardarPedido}
-          onCerrar={() => setModalVisible(false)}
-          idUsuario={idUsuario} // <-- usuario logueado
-        />
-      )}
+      {/* Tarjetas para móvil */}
+      <div className="cards-container">
+        {pedidosVisibles.map(p => (
+          <div className="card-item" key={p.id_pedido}>
+            <p><strong>ID:</strong> {p.id_pedido}</p>
+            <p><strong>Total:</strong> ${p.total}</p>
+            <p><strong>Fecha:</strong> {p.fecha}</p>
+            <p><strong>Estado:</strong> {p.estado}</p>
+            <button onClick={() => abrirModalEditar(p)}>Editar</button>
+          </div>
+        ))}
+      </div>
+
+      {/* Paginación */}
+      <div className="paginacion">
+        <button onClick={() => cambiarPagina(paginaActual - 1)} disabled={paginaActual === 1}>
+          ⬅ Anterior
+        </button>
+        <span>
+          Página {paginaActual} de {totalPaginas}
+        </span>
+        <button onClick={() => cambiarPagina(paginaActual + 1)} disabled={paginaActual === totalPaginas}>
+          Siguiente ➡
+        </button>
+      </div>
+
+      {modalVisible && <ModalPedido pedidoActual={pedidoActual} onGuardar={guardarPedido} onCerrar={() => setModalVisible(false)} idUsuario={idUsuario} />}
     </div>
   );
 }

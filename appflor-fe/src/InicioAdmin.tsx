@@ -2,10 +2,10 @@ import "./InicioAdmin.css";
 
 interface InicioAdminProps {
   onSeleccionar: (vista: string) => void;
-  modoOscuro?: boolean;
+  darkMode: boolean;
 }
 
-export default function InicioAdmin({ onSeleccionar, modoOscuro }: InicioAdminProps) {
+export default function InicioAdmin({ onSeleccionar, darkMode }: InicioAdminProps) {
   const opciones = [
     { nombre: "Usuarios", vista: "usuarios" },
     { nombre: "Flores", vista: "flores" },
@@ -15,7 +15,7 @@ export default function InicioAdmin({ onSeleccionar, modoOscuro }: InicioAdminPr
   ];
 
   return (
-    <div className={`inicio-admin ${modoOscuro ? "oscuro" : ""}`}>
+    <div className={`inicio-admin ${darkMode ? "oscuro" : ""}`}>
       <h2 className="titulo-admin">Panel de Administración</h2>
       <div className="contenedor-opciones">
         {opciones.map((opcion) => (

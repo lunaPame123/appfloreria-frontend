@@ -4,30 +4,46 @@
   background-color: #f8f8f8;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inicio-admin.claro {
+  background-color: #f8e5df;
+  color: #2a2a2a;
 }
 
 .inicio-admin.oscuro {
   background-color: #1e1e1e;
-  color: #f4f4f4;
+  color: #f8e5df;
 }
 
 .titulo-admin {
-  font-size: 28px;
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
   color: #b54e73;
+}
+
+.inicio-admin.oscuro .titulo-admin {
+  color: #f8b6b0;
 }
 
 .contenedor-opciones {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
+  gap: 30px;
   justify-items: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 .tarjeta-opcion {
-  background-color: #fff;
+  background-color: #ffffff;
   border: 2px solid #b54e73;
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 20px;
   width: 200px;
   height: 120px;
@@ -37,22 +53,62 @@
   cursor: pointer;
   font-weight: bold;
   color: #b54e73;
-  transition: transform 0.2s, background-color 0.3s, color 0.3s;
+  transition: transform 0.25s, background-color 0.3s, color 0.3s;
 }
 
 .tarjeta-opcion:hover {
   transform: scale(1.05);
   background-color: #b54e73;
   color: white;
+  box-shadow: 0 5px 15px rgba(218, 57, 91, 0.3);
 }
 
 .inicio-admin.oscuro .tarjeta-opcion {
-  background-color: #333;
-  border: 2px solid #d182a6;
-  color: #eaeaea;
+  background-color: #2b2b2b;
+  border: 2px solid #f8b6b0;
+  color: #f8e5df;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.05);
 }
 
 .inicio-admin.oscuro .tarjeta-opcion:hover {
-  background-color: #d182a6;
+  background-color:#f8b6b0;
   color: #1e1e1e;
+  box-shadow: 0 5px 15px rgba(248, 182, 176, 0.3);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tarjeta-opcion {
+  animation: aparecer 0.4s ease forwards;
+}
+
+@media (max-width: 768px) {
+  .titulo-admin {
+    font-size: 1.6rem;
+  }
+
+  .tarjeta-opcion {
+    width: 180px;
+    height: 110px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenedor-opciones {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta-opcion {
+    width: 80%;
+  }
 }

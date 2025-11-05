@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 
 interface LoginProps {
   onLogin: (usuario: any) => void;
-  modoOscuro?: boolean;
+  darkMode: boolean;
   onCerrar?: () => void;
 }
 
-export default function Login({ onLogin, modoOscuro = false, onCerrar }: LoginProps) {
+export default function Login({ onLogin, darkMode = false, onCerrar }: LoginProps) {
   const [usuario, setUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [error, setError] = useState("");
@@ -56,8 +56,8 @@ export default function Login({ onLogin, modoOscuro = false, onCerrar }: LoginPr
           width: 300,
           padding: 30,
           borderRadius: 12,
-          backgroundColor: modoOscuro ? " #2c2c2c" : "#fff",
-          color: modoOscuro ? "#fff" : "#333",
+          backgroundColor: darkMode ? " #2c2c2c" : "#fff",
+          color: darkMode ? "#fff" : "#333",
           boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
           transform: visible ? "translateY(0) scale(1)" : "translateY(-20px) scale(0.95)",
           opacity: visible ? 1 : 0,
@@ -73,7 +73,7 @@ export default function Login({ onLogin, modoOscuro = false, onCerrar }: LoginPr
           style={{
             textAlign: "center",
             marginBottom: 20,
-            color: modoOscuro ? "#c6d5b1" : "#DA395B",
+            color: darkMode ? "#c6d5b1" : "#DA395B",
           }}
         >
           Iniciar Sesión
@@ -89,8 +89,8 @@ export default function Login({ onLogin, modoOscuro = false, onCerrar }: LoginPr
             padding: 10,
             borderRadius: 6,
             border: "1px solid #b3869b",
-            backgroundColor: modoOscuro ? "#444" : "#F8B6B0",
-            color: modoOscuro ? "#fff" : "#000",
+            backgroundColor: darkMode ? "#444" : "#F8B6B0",
+            color: darkMode ? "#fff" : "#000",
           }}
         />
 
@@ -104,8 +104,8 @@ export default function Login({ onLogin, modoOscuro = false, onCerrar }: LoginPr
             padding: 10,
             borderRadius: 6,
             border: "1px solid #b3869b",
-            backgroundColor: modoOscuro ? "#444" : "#F8B6B0",
-            color: modoOscuro ? "#fff" : "#000",
+            backgroundColor: darkMode ? "#444" : "#F8B6B0",
+            color: darkMode ? "#fff" : "#000",
           }}
         />
 

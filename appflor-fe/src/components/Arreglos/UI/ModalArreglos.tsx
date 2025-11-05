@@ -6,9 +6,10 @@ type Props = {
   arregloActual: Arreglo | null;
   onGuardar: (arreglo: Arreglo) => void;
   onCerrar: () => void;
+  darkMode: boolean;
 };
 
-export default function ModalArreglo({ arregloActual, onGuardar, onCerrar }: Props) {
+export default function ModalArreglo({ arregloActual, onGuardar, onCerrar, darkMode }: Props) {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [precio, setPrecio] = useState(0);
@@ -41,7 +42,7 @@ export default function ModalArreglo({ arregloActual, onGuardar, onCerrar }: Pro
 
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
+      <div className={`modal-container ${darkMode ? "oscuro" : ""}`}>
         <h3 className="modal-title">{arregloActual ? "Editar Arreglo" : "Crear Arreglo"}</h3>
         <input
           type="text"

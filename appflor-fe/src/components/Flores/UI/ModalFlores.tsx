@@ -6,9 +6,10 @@ type Props = {
   florActual: Flor | null;
   onGuardar: (flor: Flor) => void;
   onCerrar: () => void;
+  darkMode: boolean;
 };
 
-export default function ModalFlor({ florActual, onGuardar, onCerrar }: Props) {
+export default function ModalFlor({ florActual, onGuardar, onCerrar, darkMode }: Props) {
   const [nombre, setNombre] = useState("");
   const [color, setColor] = useState("");
   const [significado, setSignificado] = useState("");
@@ -38,7 +39,7 @@ export default function ModalFlor({ florActual, onGuardar, onCerrar }: Props) {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
+      <div className={`modal-container ${darkMode ? "oscuro" : ""}`}>
         <h3 className="modal-title">{florActual ? "Editar Flor" : "Crear Flor"}</h3>
         <input
           type="text"

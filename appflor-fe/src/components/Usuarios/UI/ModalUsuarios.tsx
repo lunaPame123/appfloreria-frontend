@@ -6,9 +6,10 @@ type Props = {
   usuarioActual: Usuario | null;
   onGuardar: (usuario: Usuario | NuevoUsuario) => void;
   onCerrar: () => void;
+  darkMode: boolean;
 };
 
-export default function ModalUsuarios({ usuarioActual, onGuardar, onCerrar }: Props) {
+export default function ModalUsuarios({ usuarioActual, onGuardar, onCerrar, darkMode }: Props) {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
 
@@ -39,7 +40,7 @@ export default function ModalUsuarios({ usuarioActual, onGuardar, onCerrar }: Pr
 
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
+      <div className={`modal-container ${darkMode ? "oscuro" : "claro"}`}>
         <h3 className="modal-title">{usuarioActual ? "Editar Usuario" : "Crear Usuario"}</h3>
         <input
           type="text"

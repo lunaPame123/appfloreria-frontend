@@ -6,10 +6,11 @@ type Props = {
   pedidoActual: Pedido | null;
   onGuardar: (pedido: Pedido) => void;
   onCerrar: () => void;
-  idUsuario: number; // usuario logueado
+  idUsuario: number;
+  darkMode: boolean;
 };
 
-export default function ModalPedido({ pedidoActual, onGuardar, onCerrar, idUsuario }: Props) {
+export default function ModalPedido({ pedidoActual, onGuardar, onCerrar, idUsuario, darkMode }: Props) {
   const [total, setTotal] = useState(0);
   const [estado, setEstado] = useState("Pendiente");
 
@@ -39,7 +40,7 @@ export default function ModalPedido({ pedidoActual, onGuardar, onCerrar, idUsuar
 
   return (
     <div className="modal-overlay">
-      <div className="modal-container">
+      <div className={`modal-container ${darkMode ? "oscuro" : ""}`}>
         <h3 className="modal-title">{pedidoActual ? "Editar Pedido" : "Crear Pedido"}</h3>
         <input
           type="number"

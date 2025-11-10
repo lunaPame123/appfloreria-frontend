@@ -185,3 +185,58 @@
     font-size: 0.9rem;
   }
 }
+
+/* === FLORES SELECCIONABLES === */
+.flores-seleccionables {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.flor-card {
+  background: #fff;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 8px;
+  text-align: center;
+  transition: transform 0.2s, background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.flor-card.oscuro {
+  background-color: #3a3a3a;
+  color: #f4f4f4;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+}
+
+.flor-card.seleccionada {
+  border: 2px solid #b54e73;
+  background-color: #f9eef2;
+}
+
+.flor-card.seleccionada.oscuro {
+  background-color: #5a2b4a;
+  border-color: #f3b5d0;
+}
+
+.flor-card p {
+  margin: 4px 0 0 0;
+}
+
+/* === PREVIEW DEL RAMO === */
+.ramo-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.ramo-total {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #b54e73;
+}

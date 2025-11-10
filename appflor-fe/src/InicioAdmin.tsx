@@ -12,6 +12,7 @@ export default function InicioAdmin({ onSeleccionar, darkMode }: InicioAdminProp
     { nombre: "Arreglos", vista: "arreglos" },
     { nombre: "Pedidos", vista: "pedidos" },
     { nombre: "Favoritos", vista: "favoritos" },
+    { nombre: "Ramos", vista: "ramos" },
   ];
 
   return (

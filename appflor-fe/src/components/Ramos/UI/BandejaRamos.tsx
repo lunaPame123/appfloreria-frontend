@@ -1,97 +1,119 @@
 import { useState } from "react";
+import type { Ramo } from "../../Ramos/Types/RamoTypes";
+import type { Flor } from "../../Flores/Types/FlorTypes";
 import ModalRamo from "./ModalRamo";
-import type { Ramo } from "../Types/RamoTypes";
+import "../../../styles/Bandeja.css";
 
 type Props = {
-  idUsuario: number; // usuario logueado
+  ramosIniciales: Ramo[];
+  floresDisponibles: Flor[];
+  darkMode?: boolean;
 };
 
-export default function BandejaRamos({ idUsuario }: Props) {
-  const [ramos, setRamos] = useState<Ramo[]>([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [ramoActual, setRamoActual] = useState<Ramo | undefined>(undefined);
+export default function BandejaRamos({ ramosIniciales, floresDisponibles, darkMode }: Props) {
+  const [ramos] = useState<Ramo[]>(ramosIniciales);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [ramoActual, setRamoActual] = useState<Ramo | null>(null);
 
-  const abrirModalCrear = () => {
-    setRamoActual(undefined);
-    setModalVisible(true);
-  };
+  // PAGINACIÓN
+  const [pagina, setPagina] = useState(1);
+  const ramosPorPagina = 5;
+  const totalPaginas = Math.ceil(ramos.length / ramosPorPagina);
+  const ramosMostrados = ramos.slice(
+    (pagina - 1) * ramosPorPagina,
+    pagina * ramosPorPagina
+  );
 
-  const abrirModalEditar = (ramo: Ramo) => {
+  const abrirModal = (ramo: Ramo) => {
     setRamoActual(ramo);
-    setModalVisible(true);
+    setModalAbierto(true);
   };
 
-  const guardarRamo = (ramo: Ramo) => {
-    if (ramo.id_ramo) {
-      // Editar
-      setRamos(ramos.map(r => (r.id_ramo === ramo.id_ramo ? ramo : r)));
-    } else {
-      // Crear
-      const nuevoRamo = { ...ramo, id_ramo: ramos.length + 1 };
-      setRamos([...ramos, nuevoRamo]);
-    }
-    setModalVisible(false);
+  const cerrarModal = () => {
+    setModalAbierto(false);
+    setRamoActual(null);
+  };
+
+  const manejarPagina = (nueva: number) => {
+    if (nueva >= 1 && nueva <= totalPaginas) setPagina(nueva);
   };
 
   return (
-    <div style={{ padding: 20, minHeight: "100vh", background: "#e0f2fe" }}>
-      <h1 style={{ color: "#b3869b" }}>Ramos Personalizados</h1>
-      <button
-        onClick={abrirModalCrear}
-        style={{
-          padding: "6px 12px",
-          borderRadius: 6,
-          border: "none",
-          background: "#b3869b",
-          color: "white",
-          cursor: "pointer",
-          marginBottom: 10,
-        }}
-      >
-        Crear Ramo
-      </button>
+    <div className={`bandeja-container ${darkMode ? "oscuro" : ""}`}>
+      <div className="bandeja-header">
+        <h2>Ramos creados por clientes</h2>
+      </div>
 
-      <table style={{ width: "100%", borderCollapse: "collapse" }}>
-        <thead style={{ background: "#9d8c86", color: "white" }}>
-          <tr>
-            <th style={{ border: "1px solid #ccc", padding: 8 }}>ID</th>
-            <th style={{ border: "1px solid #ccc", padding: 8 }}>Costo</th>
-            <th style={{ border: "1px solid #ccc", padding: 8 }}>Usuario</th>
-            <th style={{ border: "1px solid #ccc", padding: 8 }}>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ramos.map((r) => (
-            <tr key={r.id_ramo} style={{ background: "#b1c2a3", color: "#3a412f" }}>
-              <td style={{ border: "1px solid #ccc", padding: 8 }}>{r.id_ramo}</td>
-              <td style={{ border: "1px solid #ccc", padding: 8 }}>{r.costo_total}</td>
-              <td style={{ border: "1px solid #ccc", padding: 8 }}>{r.id_usuario}</td>
-              <td style={{ border: "1px solid #ccc", padding: 8 }}>
-                <button
-                  onClick={() => abrirModalEditar(r)}
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: 6,
-                    border: "none",
-                    background: "#b3869b",
-                    color: "white",
-                    cursor: "pointer",
-                  }}
-                >
-                  Editar
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {ramos.length === 0 ? (
+        <p>No hay ramos registrados aún.</p>
+      ) : (
+        <>
+          {/* TABLA para pantallas grandes */}
+          <div className="table-container">
+            <table className="bandeja-table">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Cliente</th>
+                  <th>Costo Total (Bs)</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ramosMostrados.map(r => (
+                  <tr key={r.id_ramo}>
+                    <td>{r.nombre}</td>
+                    <td>{r.id_usuario}</td>
+                    <td>{r.costo_total}</td>
+                    <td>
+                      <button onClick={() => abrirModal(r)}>👁 Ver</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-      {modalVisible && (
+            {/* PAGINACIÓN */}
+            <div className="paginacion">
+              <button onClick={() => manejarPagina(pagina - 1)} disabled={pagina === 1}>
+                ◀
+              </button>
+              <span>Página {pagina} de {totalPaginas}</span>
+              <button onClick={() => manejarPagina(pagina + 1)} disabled={pagina === totalPaginas}>
+                ▶
+              </button>
+            </div>
+          </div>
+
+          {/* CARDS para pantallas pequeñas */}
+          <div className="cards-container">
+            {ramosMostrados.map(r => (
+              <div key={r.id_ramo} className="card-item">
+                <img
+                  src={r.imagen || "https://i.pinimg.com/736x/44/2d/cb/442dcb510c32485d439a838507ffba0f.jpg"}
+                  alt={r.nombre}
+                  style={{ width: "100%", borderRadius: "12px" }}
+                />
+                <h3>{r.nombre}</h3>
+                <p>Cliente: {r.id_usuario}</p>
+                <p>Costo total: Bs {r.costo_total}</p>
+
+                <button onClick={() => abrirModal(r)}>👁 Ver</button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {modalAbierto && ramoActual && (
         <ModalRamo
           ramoActual={ramoActual}
-          onGuardar={guardarRamo}
-          onCerrar={() => setModalVisible(false)}
-          idUsuario={idUsuario} // <-- usuario logueado
+          onCerrar={cerrarModal}
+          onGuardar={() => {}}
+          idUsuario={ramoActual.id_usuario}
+          floresDisponibles={floresDisponibles}
+          rolUsuario="admin"
+          darkMode={darkMode || false}
         />
       )}
     </div>

@@ -1,5 +1,7 @@
+import type { Flor } from "../../Flores/Types/FlorTypes";
+
 export type Ramo = {
-  id_ramo?: number;
+  id_ramo: number;
   id_usuario: number;
   costo_total: number;
   fecha?: string;
@@ -7,10 +9,11 @@ export type Ramo = {
   fechaCreacion?: string;
   usuarioModificacion?: string;
   fechaModificacion?: string;
-  estado?: string;
+  estado: string;
 
   // Campos opcionales para la galería del cliente
-  nombre?: string;
+  nombre: string;
   imagen?: string;
-};
 
+  flores: Flor[]; // <-- agregado
+};

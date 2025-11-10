@@ -19,7 +19,7 @@ interface NavbarProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
   onLoginClick: () => void;
-  onInicioClick: () => void; // 👈 añadimos esta prop
+  onInicioClick: () => void;
 }
 
 export default function Navbar({
@@ -45,12 +45,10 @@ export default function Navbar({
       role="navigation"
       aria-label="Barra de navegación principal"
     >
-      {/* Logo */}
       <div className="navbar-logo" onClick={onInicioClick}>
         🌷 Winter Bloom
       </div>
 
-      {/* Barra de búsqueda */}
       <div className="navbar-search">
         <input
           type="text"
@@ -59,7 +57,6 @@ export default function Navbar({
         />
       </div>
 
-      {/* Opciones de la derecha */}
       <div className="navbar-actions">
         <button onClick={onInicioClick}>
           {usuario?.rol === "cliente" ? "Explorar" : "Inicio"}
@@ -74,6 +71,7 @@ export default function Navbar({
                 <button onClick={() => setVista("arreglos")}>Arreglos</button>
                 <button onClick={() => setVista("pedidos")}>Pedidos</button>
                 <button onClick={() => setVista("favoritos")}>Favoritos</button>
+                <button onClick={() => setVista("ramos")}>Ramos</button>
               </>
             )}
 

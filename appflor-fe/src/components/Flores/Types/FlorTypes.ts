@@ -4,6 +4,7 @@ export type Flor = {
   color: string;
   significado?: string;
   precio: number;
+  imagen?: string;
   usuarioCreacion?: string;
   fechaCreacion?: string;
   usuarioModificacion?: string;

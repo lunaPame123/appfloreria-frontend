@@ -1,105 +1,133 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Ramo } from "../Types/RamoTypes";
+import type { Flor } from "../../Flores/Types/FlorTypes";
 
 type Props = {
-  ramoActual?: Ramo;
-  onGuardar: (ramo: Ramo) => void;
+  ramoActual: Ramo;
   onCerrar: () => void;
-  idUsuario: number; // usuario logueado
+  onGuardar: (ramo: Ramo) => void;
+  idUsuario: number;
+  floresDisponibles: Flor[];
+  rolUsuario: "admin" | "cliente";
+  darkMode: boolean;
 };
 
-export default function ModalRamo({ ramoActual, onGuardar, onCerrar, idUsuario }: Props) {
-  const [costo, setCosto] = useState<number>(0);
+export default function ModalRamo({
+  ramoActual,
+  onCerrar,
+  onGuardar,
+  rolUsuario,
+  darkMode,
+  floresDisponibles,
+}: Props) {
+  const [nombreRamo, setNombreRamo] = useState(ramoActual.nombre);
+  const [floresSeleccionadas, setFloresSeleccionadas] = useState<Flor[]>(
+    ramoActual.flores || []
+  );
 
-  useEffect(() => {
-    if (ramoActual) {
-      setCosto(ramoActual.costo_total);
+  const toggleFlor = (flor: Flor) => {
+    if (floresSeleccionadas.find((f) => f.id_flor === flor.id_flor)) {
+      setFloresSeleccionadas(
+        floresSeleccionadas.filter((f) => f.id_flor !== flor.id_flor)
+      );
     } else {
-      setCosto(0);
+      setFloresSeleccionadas([...floresSeleccionadas, flor]);
     }
-  }, [ramoActual]);
+  };
 
-  const manejarGuardar = () => {
-    if (costo <= 0) {
-      alert("El costo debe ser mayor que 0");
-      return;
-    }
-
-    // Creamos el objeto asegurando que id_usuario no sea undefined
-    const ramoConUsuario: Ramo = {
+  const handleGuardar = () => {
+    const costoTotal = floresSeleccionadas.reduce(
+      (acc, f) => acc + f.precio,
+      0
+    );
+    onGuardar({
       ...ramoActual,
-      id_usuario: ramoActual?.id_usuario ?? idUsuario,
-      costo_total: costo,
-    };
-
-    onGuardar(ramoConUsuario);
+      nombre: nombreRamo,
+      flores: floresSeleccionadas,
+      costo_total: costoTotal,
+    });
+    onCerrar();
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="modal-overlay">
       <div
-        style={{
-          backgroundColor: "#f5f5f5",
-          padding: 20,
-          borderRadius: 12,
-          width: 350,
-        }}
+        className={`modal-container ${darkMode ? "oscuro" : ""}`}
+        style={{ width: rolUsuario === "admin" ? "350px" : "480px" }}
       >
-        <h3 style={{ color: "#b3869b", marginBottom: 12 }}>
-          {ramoActual ? "Editar Ramo" : "Crear Ramo"}
-        </h3>
-        <input
-          type="number"
-          placeholder="Costo total"
-          value={costo}
-          onChange={(e) => setCosto(Number(e.target.value))}
-          style={{
-            width: "100%",
-            padding: 10,
-            marginBottom: 10,
-            borderRadius: 6,
-            border: "1px solid #b3869b",
-          }}
-        />
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
-          <button
-            onClick={onCerrar}
-            style={{
-              padding: "6px 12px",
-              borderRadius: 6,
-              border: "none",
-              background: "#9d8c86",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Cancelar
+        <h2 className="modal-title">{rolUsuario === "admin" ? ramoActual.nombre : "Crear / Editar Ramo"}</h2>
+
+        {rolUsuario === "cliente" ? (
+          <>
+            {/* Nombre editable */}
+            <input
+              className="modal-input"
+              type="text"
+              placeholder="Nombre del ramo"
+              value={nombreRamo}
+              onChange={(e) => setNombreRamo(e.target.value)}
+            />
+
+            {/* Flores seleccionables */}
+            <div className="flores-seleccionables">
+              {floresDisponibles.map((flor) => {
+                const seleccionada = floresSeleccionadas.some(
+                  (f) => f.id_flor === flor.id_flor
+                );
+                return (
+                  <div
+                    key={flor.id_flor}
+                    className={`flor-card ${seleccionada ? "seleccionada" : ""} ${
+                      darkMode ? "oscuro" : ""
+                    }`}
+                    onClick={() => toggleFlor(flor)}
+                  >
+                    <img
+                      src={flor.imagen || "https://via.placeholder.com/80"}
+                      alt={flor.nombre}
+                      style={{ width: "80px", height: "80px", borderRadius: "8px" }}
+                    />
+                    <p>{flor.nombre}</p>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Costo total */}
+            <div className="ramo-total">
+              Costo total: Bs {floresSeleccionadas.reduce((acc, f) => acc + f.precio, 0)}
+            </div>
+          </>
+        ) : (
+          <>
+            {/* Solo lectura para admin */}
+            <p>Cliente: {ramoActual.id_usuario}</p>
+            <p>Costo total: Bs {ramoActual.costo_total}</p>
+            <div className="ramo-preview">
+              {ramoActual.flores.map((f) => (
+                <div key={f.id_flor} style={{ textAlign: "center", margin: "4px" }}>
+                  <img
+                    src={f.imagen || "https://via.placeholder.com/50"}
+                    alt={f.nombre}
+                    style={{ width: 50, height: 50, borderRadius: 6 }}
+                  />
+                  <p style={{ fontSize: "0.75rem", marginTop: 2 }}>{f.nombre}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Botones */}
+        <div className="modal-buttons">
+          <button className="modal-button-cancel" onClick={onCerrar}>
+            Cerrar
           </button>
-          <button
-            onClick={manejarGuardar}
-            style={{
-              padding: "6px 12px",
-              borderRadius: 6,
-              border: "none",
-              background: "#b3869b",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Guardar
-          </button>
+          {rolUsuario === "cliente" && (
+            <button className="modal-button-save" onClick={handleGuardar}>
+              Guardar
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -1,78 +1,85 @@
-// RamosCliente.tsx
-import { useState, useEffect } from "react";
-import type { Ramo } from "../Types/RamoTypes";
+import { useState } from "react";
+import type { Ramo } from "../../Ramos/Types/RamoTypes";
+import type { Flor } from "../../Flores/Types/FlorTypes";
+import ModalRamo from "./ModalRamo";
+import "../../../InicioCliente.css";
 
 type Props = {
   idUsuario: number;
+  floresDisponibles: Flor[];
+  darkMode?: boolean;
 };
 
-export default function RamosCliente({ idUsuario }: Props) {
+export default function RamosCliente({ idUsuario, floresDisponibles, darkMode }: Props) {
   const [ramos, setRamos] = useState<Ramo[]>([]);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [ramoActual, setRamoActual] = useState<Ramo | null>(null);
 
-  useEffect(() => {
-    // Simulación de datos, en tu proyecto real los traerías del backend
-    const ramosSimulados: Ramo[] = [
-      { id_ramo: 1, costo_total: 25, id_usuario: idUsuario, nombre: "Ramo Primavera", imagen: "https://i.pinimg.com/1200x/08/b1/a2/08b1a2668c91cff51a122de8e6698735.jpg" },
-      { id_ramo: 2, costo_total: 30, id_usuario: idUsuario, nombre: "Ramo Romántico", imagen: "https://i.pinimg.com/1200x/13/64/fa/1364fa0bb7cd08a670e093b3d6890bdb.jpg" },
-      { id_ramo: 3, costo_total: 40, id_usuario: idUsuario, nombre: "Ramo Elegante", imagen: "https://i.pinimg.com/736x/1c/2e/cb/1c2ecbd48285a15625ff393d03a2b6b0.jpg" },
-    ];
-    setRamos(ramosSimulados);
-  }, [idUsuario]);
+  const crearRamo = () => {
+    const nuevoRamo: Ramo = {
+      id_ramo: Date.now(),
+      nombre: "",
+      id_usuario: idUsuario,
+      flores: [],
+      costo_total: 0,
+      estado: "activo",
+      imagen: "",
+      fecha: new Date().toISOString(),
+      usuarioCreacion: "cliente",
+      usuarioModificacion: "",
+      fechaCreacion: new Date().toISOString(),
+    };
+    setRamoActual(nuevoRamo);
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = () => {
+    setModalAbierto(false);
+    setRamoActual(null);
+  };
+
+  const guardarRamo = (ramo: Ramo) => {
+    setRamos(prev => {
+      const existe = prev.find(r => r.id_ramo === ramo.id_ramo);
+      if (existe) {
+        return prev.map(r => (r.id_ramo === ramo.id_ramo ? ramo : r));
+      } else {
+        return [...prev, ramo];
+      }
+    });
+    cerrarModal();
+  };
 
   return (
-    <div style={{ padding: "20px", minHeight: "100vh", backgroundColor: "#f7f7f7" }}>
-      <h1 style={{fontSize: "28px", color: "#3a412f", fontFamily: "cursive", marginBottom: "20px" }}>Explora Nuestros Ramos</h1>
-      <div
-        style={{
-          columnCount: 4,
-          columnGap: "16px",
-        }}
-      >
-        {ramos.map((r) => (
-          <div
-            key={r.id_ramo}
-            style={{
-              breakInside: "avoid",
-              marginBottom: "16px",
-              borderRadius: "10px",
-              overflow: "hidden",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-              backgroundColor: "#fff",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "scale(1.02)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 20px rgba(0,0,0,0.2)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.transform = "scale(1)";
-              (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 10px rgba(0,0,0,0.1)";
-            }}
-          >
-            <img
-              src={r.imagen}
-              alt={r.nombre}
-              style={{ width: "100%", display: "block" }}
-            />
-            <div style={{ padding: "10px" }}>
-              <h3 style={{ fontSize: "18px", color: "#3a412f", margin: "5px 0", fontFamily: "cursive" }}>{r.nombre}</h3>
-              <button
-                style={{
-                  padding: "6px 12px",
-                  border: "none",
-                  backgroundColor: "#b3869b",
-                  color: "white",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                }}
-              >
-                Ver más
-              </button>
+    <div className={`inicio-cliente-container ${darkMode ? "oscuro" : "claro"}`}>
+      <div className="crear-ramo">
+        <button onClick={crearRamo}>+ Crear nuevo ramo</button>
+      </div>
+
+      <div className="galeria-cliente">
+        {ramos.map(r => (
+          <div key={r.id_ramo} className={`card-cliente ${darkMode ? "oscuro" : ""}`}>
+            <img src={r.imagen || "https://via.placeholder.com/150"} alt={r.nombre} />
+            <div className="info">
+              <span>{r.nombre}</span>
+              <span>Bs {r.costo_total}</span>
             </div>
+            <button onClick={() => { setRamoActual(r); setModalAbierto(true); }}>Editar</button>
           </div>
         ))}
       </div>
+
+      {modalAbierto && ramoActual && (
+        <ModalRamo
+          ramoActual={ramoActual}
+          onCerrar={cerrarModal}
+          onGuardar={guardarRamo}
+          idUsuario={idUsuario}
+          floresDisponibles={floresDisponibles}
+          rolUsuario="cliente"
+          darkMode={darkMode || false}
+        />
+      )}
     </div>
   );
 }
-

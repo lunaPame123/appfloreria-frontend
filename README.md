@@ -12,7 +12,7 @@ En el **frontend**, se utilizarán **React** como biblioteca principal, **Fetch*
 
 ## *3. Tecnologías Utilizadas*
 
-El desarrollo del proyecto se basa en  **TypeScript** para el frontend. La interfaz de usuario se implementará con **React**, complementada con **HTML5** y **CSS** para la estructura y el diseño de las páginas.
+El desarrollo del proyecto se basa en  **TypeScript**. La interfaz de usuario se implementará con **React**, complementada con **HTML5** y **CSS** para la estructura y el diseño de las páginas.
 
 ## *4. Requerimientos del Proyecto*
 ### *4.1. Requerimientos Funcionales*

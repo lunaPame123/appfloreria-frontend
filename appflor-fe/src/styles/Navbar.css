@@ -29,7 +29,6 @@
   box-shadow: 0 2px 10px rgba(255,255,255,0.05);
 }
 
-/* Logo */
 .navbar-logo {
   font-size: 1.4rem;
   font-weight: 600;
@@ -38,7 +37,6 @@
   user-select: none;
 }
 
-/* Búsqueda */
 .navbar-search {
   flex: 1;
   display: flex;
@@ -72,7 +70,6 @@
   box-shadow: 0 0 0 2px #d14b8f;
 }
 
-/* Acciones */
 .navbar-actions button {
   border: none;
   background: none;
@@ -94,7 +91,6 @@
   background: rgba(255,255,255,0.1);
 }
 
-/* Botón modo oscuro */
 .modo-btn {
   font-size: 18px;
 }

@@ -10,7 +10,6 @@
   box-sizing: border-box;
 }
 
-/* Modo claro y oscuro */
 .inicio-cliente-container.claro {
   background-color: #fdfdfd;
   color: #333;
@@ -21,7 +20,6 @@
   color: #eee;
 }
 
-/* Títulos */
 .titulo {
   font-size: 2rem;
   margin-bottom: 10px;
@@ -32,7 +30,6 @@
   margin-bottom: 20px;
 }
 
-/* Galería tipo Pinterest */
 .galeria-cliente {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -43,7 +40,6 @@
   grid-auto-rows: auto;
 }
 
-/* Tarjetas tipo Pinterest */
 .card-cliente {
   border-radius: 14px;
   overflow: hidden;
@@ -52,7 +48,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Tarjetas modo oscuro */
 .card-cliente.oscuro {
   background-color: #2b2b2b;
   color: #eee;
@@ -65,13 +60,12 @@
 
 .card-cliente img {
   width: 100%;
-  height: auto; /* mantiene proporción */
+  height: auto;
   display: block;
-  object-fit: contain; /* no recorta la imagen */
+  object-fit: contain; 
   border-radius: 14px 14px 0 0;
 }
 
-/* Info de tarjeta */
 .card-cliente .info {
   display: flex;
   justify-content: space-between;
@@ -80,7 +74,6 @@
   font-weight: 500;
 }
 
-/* Botón favorito */
 .card-cliente button {
   padding: 1px;
   background-color: #b3869b;
@@ -94,7 +87,6 @@
   background-color: #d14b8f;
 }
 
-/* Crear ramo personalizado */
 .crear-ramo button {
   padding: 10px 20px;
   border: none;
@@ -110,7 +102,6 @@
   background-color: #d14b8f;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .galeria-cliente {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));

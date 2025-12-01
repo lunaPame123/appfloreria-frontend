@@ -1,31 +1,27 @@
-/* Evita el desplazamiento global */
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden; /* sin scroll global */
+  overflow: hidden;
   height: 100%;
 }
 
-/* Estilo general del cuerpo */
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* ocupa toda la pantalla */
+  height: 100vh;
   width: 100vw;
   background-color: #fdfdfd;
   color: #333;
   font-family: "Poppins", sans-serif;
   transition: background 0.4s, color 0.4s;
-  overflow: hidden; /* nada se salga */
+  overflow: hidden;
 }
 
-/* Modo oscuro */
 .app-container.oscuro {
   background-color: #2e2e2e;
   color: #fdfdfd;
 }
 
-/* Contenedor principal tipo Pinterest */
 .contenido-principal {
   flex: 1;
   overflow: auto;
@@ -37,7 +33,6 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Estilo de tarjetas tipo Pinterest */
 .contenido-principal > * {
   background: white;
   border-radius: 14px;
@@ -58,7 +53,6 @@ html, body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* 🎚 Scroll personalizado solo en bandejas */
 .contenido-principal::-webkit-scrollbar {
   width: 8px;
 }
@@ -70,37 +64,33 @@ html, body {
   background: #999;
 }
 
-/* Navbar minimalista */
 nav {
   flex-shrink: 0;
   position: relative;
   z-index: 10;
 }
 
-/* Vista de inicio a pantalla completa */
 .vista-home {
   width: 100vw;
-  height: calc(100vh - 70px); /* Resta la altura del navbar */
-  overflow: auto; /* ✅ scroll normal */
+  height: calc(100vh - 70px);
+  overflow: auto;
   display: flex;
   flex-direction: column;
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* Vistas tipo bandeja: ocupan toda la pantalla y sin scroll */
 .vista-bandeja {
   flex: 1;
   width: 100%;
   height: calc(100vh - 70px);
   padding: 20px;
-  overflow: auto; /* scroll interno si hay muchas tarjetas */
+  overflow: auto;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-/* Scroll personalizado en bandejas */
 .vista-bandeja::-webkit-scrollbar {
   width: 8px;
 }
@@ -112,7 +102,6 @@ nav {
   background: #999;
 }
 
-/* === InicioCliente === */
 .inicio-cliente {
   min-height: 100vh;
   padding: 30px;
@@ -156,7 +145,6 @@ nav {
   background-color: #ee809a;
 }
 
-/* === Galería tipo Pinterest === */
 .galeria-pinterest {
   column-count: 4;
   column-gap: 1em;
@@ -229,7 +217,6 @@ nav {
   color: #ccc;
 }
 
-/* === Botón de favorito === */
 .boton-favorito {
   position: absolute;
   top: 10px;

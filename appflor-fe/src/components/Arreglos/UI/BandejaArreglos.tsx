@@ -18,8 +18,8 @@ export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
   useEffect(() => {
     const obtenerArreglos = async () => {
       const data: Arreglo[] = [
-        { id_arreglo: 1, nombre: "Arreglo Primavera", descripcion: "Flores variadas de primavera", precio: 25, categoria: "Primavera", imagen: "" },
-        { id_arreglo: 2, nombre: "Arreglo Verano", descripcion: "Flores coloridas de verano", precio: 30, categoria: "Verano", imagen: "" },
+        { id_arreglo: 1, nombre: "Arreglo Primavera", fecha: "2025-11-11", descripcion: "Flores variadas de primavera", precio: 25, categoria: "Primavera", imagen: "",estado: "activo",},
+        { id_arreglo: 2, nombre: "Arreglo Verano", fecha: "2025-11-10", descripcion: "Flores coloridas de verano", precio: 30, categoria: "Verano", imagen: "", estado: "activo",},
       ];
       setArreglos(data);
     };
@@ -40,7 +40,13 @@ export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
     if (arreglo.id_arreglo) {
       setArreglos(arreglos.map((a) => (a.id_arreglo === arreglo.id_arreglo ? arreglo : a)));
     } else {
-      const nuevoArreglo = { ...arreglo, id_arreglo: arreglos.length + 1 };
+      const nuevoArreglo: Arreglo = {
+        ...arreglo,
+        id_arreglo: arreglos.length + 1,
+        usuarioCreacion: "Admin Demo",
+        fechaCreacion: new Date().toISOString(),
+        estado: "activo",
+      };
       setArreglos([...arreglos, nuevoArreglo]);
     }
     setModalVisible(false);
@@ -73,9 +79,11 @@ export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
             <tr>
               <th>ID</th>
               <th>Nombre</th>
+              <th>Fecha</th>
               <th>Descripción</th>
               <th>Precio</th>
               <th>Categoría</th>
+              <th>Estado</th>
               {rolUsuario === "admin" && <th>Acciones</th>}
             </tr>
           </thead>
@@ -84,9 +92,11 @@ export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
               <tr key={a.id_arreglo}>
                 <td>{a.id_arreglo}</td>
                 <td>{a.nombre}</td>
+                <td>{a.fecha}</td>
                 <td>{a.descripcion}</td>
                 <td>{a.precio}</td>
                 <td>{a.categoria}</td>
+                <td>{a.estado}</td>
                 {rolUsuario === "admin" && (
                   <td>
                     <button onClick={() => abrirModalEditar(a)}>✏️</button>
@@ -103,9 +113,11 @@ export default function BandejaArreglos({ rolUsuario, darkMode }: Props) {
         {arreglosVisibles.map((a) => (
           <div className="card-item" key={a.id_arreglo}>
             <h3>{a.nombre}</h3>
+            <p>Fecha: {a.fecha}</p>
             <p>{a.descripcion}</p>
-            <p>Precio: ${a.precio}</p>
+            <p>Precio: Bs {a.precio}</p>
             <p>Categoría: {a.categoria}</p>
+            <p>Estado: {a.estado}</p>
             {rolUsuario === "admin" && <button onClick={() => abrirModalEditar(a)}>Editar</button>}
           </div>
         ))}

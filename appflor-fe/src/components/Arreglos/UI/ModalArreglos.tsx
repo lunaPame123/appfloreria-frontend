@@ -15,6 +15,7 @@ export default function ModalArreglo({ arregloActual, onGuardar, onCerrar, darkM
   const [precio, setPrecio] = useState(0);
   const [categoria, setCategoria] = useState("");
   const [imagen, setImagen] = useState("");
+  const [fecha, setFecha] = useState("");
 
   useEffect(() => {
     if (arregloActual) {
@@ -23,21 +24,24 @@ export default function ModalArreglo({ arregloActual, onGuardar, onCerrar, darkM
       setPrecio(arregloActual.precio);
       setCategoria(arregloActual.categoria);
       setImagen(arregloActual.imagen || "");
+      setFecha(arregloActual.fecha || new Date().toISOString().split("T")[0]);
     } else {
       setNombre("");
       setDescripcion("");
       setPrecio(0);
       setCategoria("");
       setImagen("");
+      setFecha(new Date().toISOString().split("T")[0]);
     }
   }, [arregloActual]);
 
   const manejarGuardar = () => {
-    if (!nombre || !descripcion || precio <= 0 || !categoria || !imagen) {
+    if (!nombre || !descripcion || precio <= 0 || !categoria || !imagen || !fecha) {
       alert("Todos los campos son obligatorios y el precio debe ser mayor que 0");
       return;
     }
-    onGuardar({ ...arregloActual, nombre, descripcion, precio, categoria, imagen });
+    onGuardar({ ...arregloActual, nombre, descripcion, precio, categoria, imagen, fecha,
+      estado: arregloActual?.estado || "activo",});
   };
 
   return (
@@ -77,6 +81,13 @@ export default function ModalArreglo({ arregloActual, onGuardar, onCerrar, darkM
           placeholder="URL de Imagen"
           value={imagen}
           onChange={(e) => setImagen(e.target.value)}
+          className="modal-input"
+        />
+        <input
+          type="date"
+          placeholder="Fecha"
+          value={fecha}
+          onChange={(e) => setFecha(e.target.value)}
           className="modal-input"
         />
         <div className="modal-buttons">

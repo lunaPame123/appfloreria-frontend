@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./styles/Home.css";
 
 type Props = { user: any };
 
@@ -16,7 +16,7 @@ export default function Home({}: Props) {
         <h1>Winter Bloom 🌸</h1>
         <p>
           Bienvenido a <strong>Winter Bloom</strong>, donde cada flor cuenta una historia.
-          Descubre arreglos únicos, ramos personalizados y la magia del arte floral.
+          Descubre arreglos únicos y la magia del arte floral.
         </p>
       </div>
 

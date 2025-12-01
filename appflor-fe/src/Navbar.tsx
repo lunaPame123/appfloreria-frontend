@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./Navbar.css";
+import "./styles/Navbar.css";
 
 interface NavbarProps {
   usuario: any;
@@ -12,7 +12,6 @@ interface NavbarProps {
       | "usuarios"
       | "flores"
       | "arreglos"
-      | "ramos"
       | "pedidos"
       | "favoritos"
   ) => void;
@@ -52,7 +51,7 @@ export default function Navbar({
       <div className="navbar-search">
         <input
           type="text"
-          placeholder="Buscar flores, ramos o arreglos..."
+          placeholder="Buscar flores o arreglos..."
           className="search-input"
         />
       </div>
@@ -71,13 +70,11 @@ export default function Navbar({
                 <button onClick={() => setVista("arreglos")}>Arreglos</button>
                 <button onClick={() => setVista("pedidos")}>Pedidos</button>
                 <button onClick={() => setVista("favoritos")}>Favoritos</button>
-                <button onClick={() => setVista("ramos")}>Ramos</button>
               </>
             )}
 
             {usuario.rol === "cliente" && (
               <>
-                <button onClick={() => setVista("ramos")}>Ramos</button>
                 <button onClick={() => setVista("favoritos")}>❤️ Favoritos</button>
                 <button onClick={() => setVista("pedidos")}>Pedidos</button>
               </>

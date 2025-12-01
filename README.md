@@ -31,3 +31,42 @@ Asimismo, la aplicación debe ofrecer un rendimiento ágil, con tiempos de carga
 
 ### *5.2. Digrama Relacional*
 <img width="843" height="611" alt="ModeloRelacional" src="https://github.com/user-attachments/assets/6bada5de-ad29-4ed4-928f-e1bdbdb35128" />
+
+## * MANUAL DE INSTALACION*
+
+### **1. Requisitos previos**
+
+Verificar que Node.js y npm estén instalados:
+
+```bash
+node -v
+npm -v
+```
+
+Si estos comandos muestran una versión, ya están instalados.
+
+### **2. Clonar el repositorio**
+
+```bash
+git clone https://github.com/lunaPame123/winterbloom_frontend.git
+cd winterbloom_frontend
+```
+
+### **3. Instalar dependencias**
+
+```bash
+npm install
+```
+
+### **4. Ejecutar el proyecto en modo desarrollo**
+
+Para iniciar el servidor local:
+
+```bash
+npm run dev
+```
+El terminal mostrará algo como:
+
+Local:   http://localhost:5173/
+
+Abre ese enlace en tu navegador.

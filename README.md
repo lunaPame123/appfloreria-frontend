@@ -31,29 +31,19 @@ Asimismo, la aplicación debe ofrecer un rendimiento ágil, con tiempos de carga
 
 ### *5.2. Digrama Relacional*
 
-Claro, aquí tienes **TODO EL README COMPLETO**, limpio, ordenado, bonito y listo para copiar/pegar directamente en tu GitHub.
-Incluye **las imágenes + el manual de instalación**, todo ya integrado.
-
----
-
-# 📄 **README COMPLETO (LISTO PARA COPIAR)**
-
-````md
 <img width="843" height="611" alt="ModeloRelacional" src="https://github.com/user-attachments/assets/6bada5de-ad29-4ed4-928f-e1bdbdb35128" />
 
 <img width="944" height="641" alt="DR" src="https://github.com/user-attachments/assets/8cf9de50-e911-47e4-8df5-e010a9f78ee0" />
-
----
 
 # 🌸 *MANUAL DE INSTALACIÓN – WinterBloom Frontend*
 
 Este manual describe los pasos necesarios para instalar y ejecutar el proyecto desarrollado con **React (Vite) + TypeScript**.
 
----
-
 ## ✅ **1. Requisitos previos**
 
 Verificar que Node.js y npm estén instalados:
+
+````md
 
 ```bash
 node -v
@@ -62,24 +52,20 @@ npm -v
 
 Si estos comandos muestran una versión, entonces ya están instalados correctamente.
 
----
 
-## ✅ **2. Clonar el repositorio**
+## **2. Clonar el repositorio**
 
 ```bash
 git clone https://github.com/lunaPame123/winterbloom_frontend.git
 cd winterbloom_frontend
 ```
 
----
-
-## ✅ **3. Instalar dependencias**
+## **3. Instalar dependencias**
 
 ```bash
 npm install
 ```
 
----
 
 ## ✅ **4. Ejecutar el proyecto en modo desarrollo**
 
@@ -96,8 +82,6 @@ Local:   http://localhost:5173/
 ```
 
 Abre ese enlace en tu navegador.
-
----
 
 ## 🚀 ¡Listo!
 

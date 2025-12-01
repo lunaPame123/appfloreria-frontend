@@ -1,0 +1,119 @@
+.inicio-cliente-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background-color: #fdfdfd;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+/* Modo claro y oscuro */
+.inicio-cliente-container.claro {
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+.inicio-cliente-container.oscuro {
+  background-color: #1f1f1f;
+  color: #eee;
+}
+
+/* Títulos */
+.titulo {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.subtitulo {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* Galería tipo Pinterest */
+.galeria-cliente {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  grid-auto-rows: auto;
+}
+
+/* Tarjetas tipo Pinterest */
+.card-cliente {
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Tarjetas modo oscuro */
+.card-cliente.oscuro {
+  background-color: #2b2b2b;
+  color: #eee;
+}
+
+.card-cliente:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-cliente img {
+  width: 100%;
+  height: auto; /* mantiene proporción */
+  display: block;
+  object-fit: contain; /* no recorta la imagen */
+  border-radius: 14px 14px 0 0;
+}
+
+/* Info de tarjeta */
+.card-cliente .info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  font-weight: 500;
+}
+
+/* Botón favorito */
+.card-cliente button {
+  padding: 1px;
+  background-color: #b3869b;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.card-cliente button:hover {
+  background-color: #d14b8f;
+}
+
+/* Crear ramo personalizado */
+.crear-ramo button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  background-color: #b3869b;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.crear-ramo button:hover {
+  background-color: #d14b8f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .galeria-cliente {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+  }
+}

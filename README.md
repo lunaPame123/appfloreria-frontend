@@ -39,13 +39,13 @@ Asimismo, la aplicación debe ofrecer un rendimiento ágil, con tiempos de carga
 
 Este manual describe los pasos necesarios para instalar y ejecutar el proyecto desarrollado con **React (Vite) + TypeScript**.
 
-## ✅ **1. Requisitos previos**
+## **1. Requisitos previos**
 
 Verificar que Node.js y npm estén instalados:
 
 ````md
 
-```bash
+```
 node -v
 npm -v
 ````
@@ -55,23 +55,23 @@ Si estos comandos muestran una versión, entonces ya están instalados correctam
 
 ## **2. Clonar el repositorio**
 
-```bash
+```
 git clone https://github.com/lunaPame123/winterbloom_frontend.git
 cd winterbloom_frontend
 ```
 
 ## **3. Instalar dependencias**
 
-```bash
+```
 npm install
 ```
 
 
-## ✅ **4. Ejecutar el proyecto en modo desarrollo**
+## **4. Ejecutar el proyecto en modo desarrollo**
 
 Para iniciar el servidor local:
 
-```bash
+```
 npm run dev
 ```
 
@@ -82,6 +82,23 @@ Local:   http://localhost:5173/
 ```
 
 Abre ese enlace en tu navegador.
+
+
+##¡Para hacer pruebas!
+
+si quieres ver la vista de USUARIO inicia sesion con:
+
+```
+usuario: cliente
+contraseña: 1234
+```
+
+Y si quieres ver la vista de ADMINISTRADOR inicia sesion con:
+
+```
+usuario: admin
+contraseña: 1234
+```
 
 ## 🚀 ¡Listo!
 
